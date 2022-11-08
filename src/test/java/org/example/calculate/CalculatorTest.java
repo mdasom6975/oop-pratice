@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 /**
@@ -24,7 +25,7 @@ public class CalculatorTest {
     @DisplayName("덧셈 연산을 수행한다.")
     @Test
     void additionTest() {
-        int result = Calculator.calculate(1, "+", 2);
+        int result = Calculator.calculate(new PositiveNumber(1), "+", new PositiveNumber(2));
 
         assertThat(result).isEqualTo(3);
     }
@@ -32,7 +33,7 @@ public class CalculatorTest {
     @DisplayName("뺄셈 연산을 수행한다.")
     @Test
     void subtractionTest() {
-        int result = Calculator.calculate(1, "-", 2);
+        int result = Calculator.calculate(new PositiveNumber(1), "-", new PositiveNumber(2));
 
         assertThat(result).isEqualTo(-1);
     }
@@ -41,7 +42,7 @@ public class CalculatorTest {
     @ParameterizedTest
     @MethodSource("formulaAndResult")
     void calculateTest(int operand1, String operator, int operand2, int result) {
-        int calculateResult = Calculator.calculate(operand1, operator, operand2);
+        int calculateResult = Calculator.calculate(new PositiveNumber(operand1), operator, new PositiveNumber(operand2));
 
         assertThat(calculateResult).isEqualTo(result);
     }
